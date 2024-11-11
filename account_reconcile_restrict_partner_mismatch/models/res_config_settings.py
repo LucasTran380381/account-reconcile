@@ -4,7 +4,6 @@ from odoo import fields, models
 
 
 class ResConfigSettings(models.TransientModel):
-
     _inherit = "res.config.settings"
 
     restrict_partner_mismatch_on_reconcile = fields.Boolean(

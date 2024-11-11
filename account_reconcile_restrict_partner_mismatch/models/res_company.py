@@ -4,7 +4,6 @@ from odoo import fields, models
 
 
 class ResCompany(models.Model):
-
     _inherit = "res.company"
 
     restrict_partner_mismatch_on_reconcile = fields.Boolean(

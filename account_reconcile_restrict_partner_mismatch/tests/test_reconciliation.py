@@ -86,7 +86,8 @@ class TestReconciliation(BaseCommon):
         with self.assertRaises(UserError) as exc:
             self.aml.reconcile()
         self.assertIn(
-            "The partner has to be the same on all lines for receivable and payable accounts!",
+            "The partner has to be the same on all lines "
+            "for receivable and payable accounts!",
             exc.exception.args[0],
         )
         # all lines with same partner allowed
@@ -121,7 +122,8 @@ class TestReconciliation(BaseCommon):
         with self.assertRaises(UserError) as exc:
             self.aml.reconcile()
         self.assertIn(
-            "The partner has to be the same on all lines for receivable and payable accounts!",
+            "The partner has to be the same on all lines "
+            "for receivable and payable accounts!",
             exc.exception.args[0],
         )
         # reconciliation forbiden only for certain types of accounts

@@ -4,7 +4,6 @@ from odoo import fields, models
 
 
 class AccountJournal(models.Model):
-
     _inherit = "account.journal"
 
     no_restrict_partner_mismatch_on_reconcile = fields.Boolean(

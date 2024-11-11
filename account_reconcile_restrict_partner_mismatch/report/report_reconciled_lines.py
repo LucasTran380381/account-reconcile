@@ -29,7 +29,7 @@ class AccountReconcilePartnerMismatchReport(models.Model):
         """Select lines which violate defined rules"""
         tools.drop_view_if_exists(self.env.cr, self._table)
         self._cr.execute(
-            """CREATE OR REPLACE VIEW %s AS (
+            f"""CREATE OR REPLACE VIEW {self._table} AS (
                     SELECT pr.id id
                     , pr.id partial_reconcile_id
                     , pr.full_reconcile_id
@@ -55,6 +55,5 @@ class AccountReconcilePartnerMismatchReport(models.Model):
                     OR (caml.partner_id IS NULL
                         AND daml.partner_id IS NOT NULL))
                 )
-        """
-            % self._table
+            """
         )
