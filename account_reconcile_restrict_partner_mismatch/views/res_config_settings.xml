@@ -7,24 +7,19 @@
         <field name="model">res.config.settings</field>
         <field name="inherit_id" ref="account.res_config_settings_view_form" />
         <field name="arch" type="xml">
-            <div id="quick_edit_mode" position="after">
-                <h2>Partners Mismatch Restriction on Reconcile</h2>
-                <div class="row mt16 o_settings_container" id="quick_edit_mode">
-                    <div class="col-12 col-lg-12 o_setting_box">
-                        <div class="o_setting_left_pane mt16">
-                            <div>
-                                <field name="restrict_partner_mismatch_on_reconcile" />
-                            </div>
-                        </div>
-                        <div class="o_setting_right_pane mt16">
-                            <label for="restrict_partner_mismatch_on_reconcile" />
-                            <div class="text-muted">
-                                Check this if you want to avoid partner mismatch (several different partners) on reconciliation.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <block id="quick_edit_mode" position="after">
+                <block
+                    title="Partners Mismatch Restriction on Reconcile"
+                    name="account_reconcile_restrict_partner_mismatch"
+                >
+                    <setting
+                        id="restrict_partner_mismatch_on_reconcile"
+                        help="Check this if you want to avoid partner mismatch (several different partners) on reconciliation."
+                    >
+                        <field name="restrict_partner_mismatch_on_reconcile" />
+                    </setting>
+                </block>
+            </block>
         </field>
     </record>
 </odoo>

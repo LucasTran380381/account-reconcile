@@ -7,7 +7,7 @@
         <field name="inherit_id" ref="account.view_account_journal_form" />
         <field name="arch" type="xml">
             <xpath
-                expr="//field[@name='sale_activity_type_id']/parent::group"
+                expr="//field[@name='invoice_reference_type']/parent::group"
                 position="after"
             >
                 <group

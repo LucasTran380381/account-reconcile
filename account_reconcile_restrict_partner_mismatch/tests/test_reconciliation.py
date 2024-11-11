@@ -2,10 +2,12 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 from odoo.exceptions import UserError
+from odoo.tests import tagged
 
 from odoo.addons.base.tests.common import BaseCommon
 
 
+@tagged("-at_install", "post_install")
 class TestReconciliation(BaseCommon):
     @classmethod
     def setUpClass(cls):
@@ -138,6 +140,31 @@ class TestReconciliation(BaseCommon):
         # reconciliation for different partners allowed
         # for not forbidden types
         self.aml.write({"account_id": account.id})
+        self.aml.move_id.action_post()
+        self.aml.reconcile()
+        self.assertTrue(all(self.aml.mapped("reconciled")))
+
+    def test_reconcile_same_partner(self):
+        """Test reconciliation of two move lines with same partner works."""
+        self.aml.move_id.company_id.restrict_partner_mismatch_on_reconcile = True
+        # Set same partner for both lines
+        self.aml.write({"partner_id": self.partner.id})
+        self.aml.move_id.action_post()
+        self.aml.reconcile()
+        self.assertTrue(all(self.aml.mapped("reconciled")))
+
+    def test_reconcile_different_journals(self):
+        """Test reconciliation works across different journals."""
+        # Create second journal
+        cash_journal = self.env["account.journal"].create(
+            {"name": "Cash", "type": "cash", "code": "CSH67"}
+        )
+
+        # Update journals of existing moves
+        self.aml[0].move_id.journal_id = self.bank_journal
+        self.aml[1].move_id.journal_id = cash_journal
+
+        # Test reconciliation
         self.aml.move_id.action_post()
         self.aml.reconcile()
         self.assertTrue(all(self.aml.mapped("reconciled")))
